@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Factories;
+
+use App\Entities\Props\{{ name }}Props;
+use App\Entities\{{ name }} as {{ name }}Entity;
+
+class {{ name }}Factory
+{
+    public static function create(array $row): {{ name }}Entity
+    {
+        return new {{ name }}Entity(
+            $row['id'],
+            new {{ name }}Props(
+                $row['name'],
+                $row['description'],
+                $row['price']
+            )
+        );
+    }
+
+    public static function bulk(array $rows): array
+    {
+        return array_map(function ($row) {
+            return self::create($row);
+        }, $rows);
+    }
+}

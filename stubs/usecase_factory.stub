@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Factories;
+
+use App\Repositories\{{ class }}Repository;
+use App\Services\{{ class }}Service;
+use App\UseCases\Create{{ class }}\UseCase as Create{{ class }}UseCase;
+use App\UseCases\Update{{ class }}\UseCase as Update{{ class }}UseCase;
+use App\UseCases\Delete{{ class }}\UseCase as Delete{{ class }}UseCase;
+use App\UseCases\Get{{ class }}\UseCase as Get{{ class }}UseCase;
+use App\UseCases\List{{ class }}s\UseCase as List{{ class }}sUseCase;
+
+class {{ class }}UseCaseFactory
+{
+    protected {{ class }}Repository ${{ class }}_repository;
+    protected {{ class }}Service ${{ class }}_service;
+
+    public function __construct({{ class }}Repository ${{ class }}_repository, {{ class }}Service ${{ class }}_service)
+    {
+        $this->{{ class }}_repository = ${{ class }}_repository;
+        $this->{{ class }}_service = ${{ class }}_service;
+    }
+
+    public function makeCreate{{ class }}UseCase(): Create{{ class }}UseCase
+    {
+        return new Create{{ class }}UseCase($this->{{ class }}_service);
+    }
+
+    public function makeUpdate{{ class }}UseCase(): Update{{ class }}UseCase
+    {
+        return new Update{{ class }}UseCase($this->{{ class }}_service);
+    }
+
+    public function makeDelete{{ class }}UseCase(): Delete{{ class }}UseCase
+    {
+        return new Delete{{ class }}UseCase($this->{{ class }}_service);
+    }
+
+    public function makeGet{{ class }}UseCase(): Get{{ class }}UseCase
+    {
+        return new Get{{ class }}UseCase($this->{{ class }}_service);
+    }
+
+    public function makeList{{ class }}sUseCase(): List{{ class }}sUseCase
+    {
+        return new List{{ class }}sUseCase($this->{{ class }}_service);
+    }
+}

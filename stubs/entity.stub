@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Entities;
+
+class {{ class }}
+{
+    private int $id;
+    private Props\{{ class }}Props $props;
+
+    public function __construct(int $id, Props\{{ class }}Props $props)
+    {
+        $this->id = $id;
+        $this->props = $props;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getProps(): Props\{{ class }}Props
+    {
+        return $this->props;
+    }
+
+    public function setProps(Props\{{ class }}Props $props): void
+    {
+        $this->props = $props;
+    }
+}

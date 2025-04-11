@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Services;
+
+use App\Repositories\{{ class }}Repository;
+use App\ValueObjects\{{ class }}ValueObject;
+use App\Entities\{{ class }} as {{ class }}Entity;
+use App\Builders\ConditionsQueryBuilder;
+
+class {{ class }}Service
+{
+    protected {{ class }}Repository ${{ class }}Repository;
+
+    public function __construct({{ class }}Repository ${{ class }}Repository)
+    {
+        $this->{{ class }}Repository = ${{ class }}Repository;
+    }
+
+    public function create({{ class }}ValueObject ${{ class }}VO): {{ class }}Entity
+    {
+        return $this->{{ class }}Repository->create(${{ class }}VO);
+    }
+
+    public function find(int $id): ?{{ class }}Entity
+    {
+        return $this->{{ class }}Repository->find($id);
+    }
+
+    public function update({{ class }}Entity ${{ class }}): bool
+    {
+        return $this->{{ class }}Repository->update(${{ class }});
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->{{ class }}Repository->delete($id);
+    }
+
+    public function list(ConditionsQueryBuilder $conditionsQueryBuilder): array
+    {
+        return $this->{{ class }}Repository->list($conditionsQueryBuilder);
+    }
+
+    public function fetchPaginatedData(ConditionsQueryBuilder $conditionsQueryBuilder): array
+    {
+        return $this->{{ class }}Repository->paginate($conditionsQueryBuilder);
+    }
+}

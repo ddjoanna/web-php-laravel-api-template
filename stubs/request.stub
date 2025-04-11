@@ -1,0 +1,23 @@
+<?php
+
+namespace App\UseCases\{{ useCaseName }};
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class Request extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'column' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'column.required' => trans('validation.required', ['attribute' => '列名']),
+        ];
+    }
+}
+

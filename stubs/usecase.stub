@@ -1,0 +1,22 @@
+<?php
+
+namespace App\UseCases\{{ useCaseName }};
+
+use App\UseCases\{{ useCaseName }}\Request;
+use App\UseCases\{{ useCaseName }}\Response;
+
+class {{ class }}
+{
+    public function __construct()
+    {
+        //
+    }
+
+    public function execute(Request $request): Response
+    {
+        
+        $response = new Response();
+
+        return $response;
+    }
+}

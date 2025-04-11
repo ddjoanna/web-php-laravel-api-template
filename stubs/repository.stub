@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{ class }};
+use App\Builders\ConditionsQueryBuilder;
+use App\Entities\{{ class }} as {{ class }}Entity;
+use App\Entities\Props\{{ class }}Props;
+use App\ValueObjects\{{ class }}ValueObject;
+use App\Factories\{{ class }}Factory;
+
+class {{ class }}Repository
+{
+    public function create({{ class }}ValueObject ${{ class }}VO): {{ class }}Entity
+    {
+        ${{ class }} = {{ class }}::create(${{ class }}VO->get{{ class }}());
+        return {{ class }}Factory::create(${{ class }}->toArray());
+    }
+
+    public function find($id): ?{{ class }}Entity
+    {
+        ${{ class }} = {{ class }}::find($id);
+        return ${{ class }} ? {{ class }}Factory::create(${{ class }}->toArray()) : null;
+    }
+
+    public function update({{ class }}Entity ${{ class }}Entity): bool
+    {
+        ${{ class }} = {{ class }}::find(${{ class }}Entity->getId());
+        if (!${{ class }}) {
+            return false;
+        }
+
+        return ${{ class }}->update([
+            'name' => ${{ class }}Entity->getProps()->getName(),
+            'description' => ${{ class }}Entity->getProps()->getDescription(),
+            'price' => ${{ class }}Entity->getProps()->getPrice(),
+        ]);
+    }
+
+
+    public function delete($id): bool
+    {
+        ${{ class }} = {{ class }}::find($id);
+        if (!${{ class }}) {
+            return false;
+        }
+        return ${{ class }}->delete();
+    }
+
+    public function list(ConditionsQueryBuilder $conditionsQueryBuilder): array
+    {
+        $query = {{ class }}::query();
+        $query = $conditionsQueryBuilder->build($query);
+        ${{ class }}s = $query->get()->toArray();
+
+        return {{ class }}Factory::bulk(${{ class }}s);
+    }
+
+    public function paginate(ConditionsQueryBuilder $conditionsQueryBuilder): array
+    {
+        $query = {{ class }}::query();
+        $query = $conditionsQueryBuilder->build($query);
+
+        $paginator = $query->paginate(
+            $conditionsQueryBuilder->getPageSize(),
+            $conditionsQueryBuilder->getColumns(),
+            'page',
+            $conditionsQueryBuilder->getPage()
+        )->toArray();
+
+        ${{ class }}s = {{ class }}Factory::bulk($paginator['data']);
+
+        return [
+            '{{ class }}s' => ${{ class }}s,
+            'pagination' => [
+                'page' => $paginator['current_page'],
+                'page_size' => $paginator['per_page'],
+                'total' => $paginator['total'],
+                'order_by' => $conditionsQueryBuilder->getOrderBy(),
+                'order_direction' => $conditionsQueryBuilder->getOrderDirection(),
+            ]
+        ];
+    }
+}
