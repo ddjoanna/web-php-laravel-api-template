@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\ApiResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,48 +18,24 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, $request) {
+            $response = app(ApiResponse::class);
             if ($e instanceof Illuminate\Validation\ValidationException) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => '資料錯誤',
-                    'errors' => $e->errors(),
-                    'data' => null,
-                ], 422);
+                return $response->error(422, '資料錯誤', $e->errors());
             }
 
             if ($e instanceof Illuminate\Database\Eloquent\ModelNotFoundException) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => '找不到資料',
-                    'errors' => null,
-                    'data' => null,
-                ], 404);
+                return $response->error(404, '找不到資料', null);
             }
 
             if ($e instanceof App\Exceptions\NotFoundException) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => '找不到資料',
-                    'errors' => null,
-                    'data' => null,
-                ], 404);
+                return $response->error(404, '找不到資料', null);
             }
 
             if ($e instanceof Illuminate\Auth\AuthenticationException) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => '未登入',
-                    'errors' => null,
-                    'data' => null,
-                ], 401);
+                return $response->error(401, '未登入', null);
             }
 
             // 預設的錯誤處理
-            return response()->json([
-                'status' => 'failed',
-                'message' => '發生錯誤',
-                'error' => app()->isLocal() ? $e->getMessage() : null,
-                'data' => null,
-            ], 500);
+            return $response->error(500, '發生錯誤', app()->isLocal() ? $e->getMessage() : null);
         });
     })->create();

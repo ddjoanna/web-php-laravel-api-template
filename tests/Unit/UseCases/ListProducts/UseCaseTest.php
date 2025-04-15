@@ -72,17 +72,15 @@ class UseCaseTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertIsArray($response->toArray());
-        $this->assertEquals('success', $response->toArray()['status']);
-        $this->assertEquals('取得成功', $response->toArray()['message']);
-        $this->assertIsArray($response->toArray()['data']);
-        $this->assertCount(1, $response->toArray()['data']['products']);
-        $this->assertEquals(1, $response->toArray()['data']['products'][0]['id']);
-        $this->assertEquals('Test Product', $response->toArray()['data']['products'][0]['name']);
-        $this->assertEquals('This is a test product.', $response->toArray()['data']['products'][0]['description']);
-        $this->assertEquals(10.99, $response->toArray()['data']['products'][0]['price']);
-        $this->assertIsArray($response->toArray()['data']['pagination']);
-        $this->assertEquals(1, $response->toArray()['data']['pagination']['page']);
-        $this->assertEquals(10, $response->toArray()['data']['pagination']['page_size']);
+        $this->assertIsArray($response->toArray());
+        $this->assertCount(1, $response->toArray()['products']);
+        $this->assertEquals(1, $response->toArray()['products'][0]['id']);
+        $this->assertEquals('Test Product', $response->toArray()['products'][0]['name']);
+        $this->assertEquals('This is a test product.', $response->toArray()['products'][0]['description']);
+        $this->assertEquals(10.99, $response->toArray()['products'][0]['price']);
+        $this->assertIsArray($response->toArray()['pagination']);
+        $this->assertEquals(1, $response->toArray()['pagination']['page']);
+        $this->assertEquals(10, $response->toArray()['pagination']['page_size']);
     }
 
     /**
@@ -129,18 +127,16 @@ class UseCaseTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertIsArray($response->toArray());
-        $this->assertEquals('success', $response->toArray()['status']);
-        $this->assertEquals('取得成功', $response->toArray()['message']);
-        $this->assertIsArray($response->toArray()['data']);
-        $this->assertCount(1, $response->toArray()['data']['products']);
-        $this->assertEquals(1, $response->toArray()['data']['products'][0]['id']);
-        $this->assertEquals('Test Product', $response->toArray()['data']['products'][0]['name']);
-        $this->assertEquals('This is a test product.', $response->toArray()['data']['products'][0]['description']);
-        $this->assertEquals(10.99, $response->toArray()['data']['products'][0]['price']);
-        $this->assertIsArray($response->toArray()['data']['pagination']);
-        $this->assertEquals(1, $response->toArray()['data']['pagination']['page']);
-        $this->assertEquals(10, $response->toArray()['data']['pagination']['page_size']);
-        $this->assertEquals(20, $response->toArray()['data']['pagination']['total']);
+        $this->assertIsArray($response->toArray()['products']);
+        $this->assertCount(1, $response->toArray()['products']);
+        $this->assertEquals(1, $response->toArray()['products'][0]['id']);
+        $this->assertEquals('Test Product', $response->toArray()['products'][0]['name']);
+        $this->assertEquals('This is a test product.', $response->toArray()['products'][0]['description']);
+        $this->assertEquals(10.99, $response->toArray()['products'][0]['price']);
+        $this->assertIsArray($response->toArray()['pagination']);
+        $this->assertEquals(1, $response->toArray()['pagination']['page']);
+        $this->assertEquals(10, $response->toArray()['pagination']['page_size']);
+        $this->assertEquals(20, $response->toArray()['pagination']['total']);
     }
 
     protected function tearDown(): void

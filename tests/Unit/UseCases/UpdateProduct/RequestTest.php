@@ -5,12 +5,12 @@ namespace Tests\Unit\UseCases\UpdateProduct;
 use Tests\TestCase;
 use App\UseCases\UpdateProduct\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 
 class RequestTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     protected $routeMock;
 

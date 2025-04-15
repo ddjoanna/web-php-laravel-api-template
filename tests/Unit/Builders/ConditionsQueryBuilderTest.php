@@ -4,12 +4,12 @@ namespace Tests\Unit\Builders;
 
 use App\Builders\ConditionsQueryBuilder;
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ConditionsQueryBuilderTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase;
 
     /**
      * 測試等於條件
@@ -21,7 +21,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `name` = ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "name" = ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals(['John'], $queryBuilder->getBindings());
     }
 
@@ -35,7 +35,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `name` like ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "name" like ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals(['%John%'], $queryBuilder->getBindings());
     }
 
@@ -49,7 +49,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `age` > ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "age" > ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals([18], $queryBuilder->getBindings());
     }
 
@@ -63,7 +63,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `age` >= ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "age" >= ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals([18], $queryBuilder->getBindings());
     }
 
@@ -77,7 +77,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `age` < ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "age" < ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals([18], $queryBuilder->getBindings());
     }
 
@@ -91,7 +91,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         $queryBuilder = $builder->build(User::query());
 
-        $this->assertStringContainsString('select * from `users` where `age` <= ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "age" <= ? order by "id" asc', $queryBuilder->toSql());
         $this->assertEquals([18], $queryBuilder->getBindings());
     }
 
@@ -107,7 +107,7 @@ class ConditionsQueryBuilderTest extends TestCase
 
         [$start, $end] = [18, 25];
         // Assert SQL contains between clause
-        $this->assertStringContainsString('select * from `users` where `age` between ? and ? order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" where "age" between ? and ? order by "id" asc', $queryBuilder->toSql());
         // Assert bindings are correct
         $this->assertEquals([$start, $end], $queryBuilder->getBindings());
     }
@@ -126,7 +126,7 @@ class ConditionsQueryBuilderTest extends TestCase
         $queryBuilder = $builder->build(User::query());
 
         // Assert SQL contains order by clause
-        $this->assertStringContainsString('select * from `users` order by `name` desc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select * from "users" order by "name" desc', $queryBuilder->toSql());
     }
 
     /**
@@ -142,7 +142,7 @@ class ConditionsQueryBuilderTest extends TestCase
         $queryBuilder = $builder->build(User::query());
 
         // Assert SQL contains select columns
-        $this->assertStringContainsString('select `name`, `email` from `users` order by `id` asc', $queryBuilder->toSql());
+        $this->assertStringContainsString('select "name", "email" from "users" order by "id" asc', $queryBuilder->toSql());
     }
 
     /**

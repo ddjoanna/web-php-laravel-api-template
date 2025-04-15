@@ -8,6 +8,8 @@ use App\UseCases\GetProduct;
 use App\UseCases\ListProducts;
 use App\UseCases\UpdateProduct;
 use App\UseCases\DeleteProduct;
+use App\Services\ApiResponse;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
@@ -17,38 +19,39 @@ class ProductController extends Controller
     {
         $this->productUseCaseFactory = $productUseCaseFactory;
     }
-    public function index(ListProducts\Request $request)
+
+    public function index(ListProducts\Request $request, ApiResponse $response): JsonResponse
     {
         $usecase = $this->productUseCaseFactory->makeListProductsUseCase();
-        $response = $usecase->execute($request);
-        return response()->json($response->toArray(), 200);
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 
-    public function store(CreateProduct\Request $request)
+    public function store(CreateProduct\Request $request, ApiResponse $response): JsonResponse
     {
         $usecase = $this->productUseCaseFactory->makeCreateProductUseCase();
-        $response = $usecase->execute($request);
-        return response()->json($response->toArray(), 201);
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 
-    public function show(GetProduct\Request $request)
+    public function show(GetProduct\Request $request, ApiResponse $response): JsonResponse
     {
         $usecase = $this->productUseCaseFactory->makeGetProductUseCase();
-        $response = $usecase->execute($request);
-        return response()->json($response->toArray(), 200);
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 
-    public function update(UpdateProduct\Request $request)
+    public function update(UpdateProduct\Request $request, ApiResponse $response): JsonResponse
     {
         $usecase = $this->productUseCaseFactory->makeUpdateProductUseCase();
         $usecase->execute($request);
-        return response()->noContent();
+        return $response->success(204, 'success', null);
     }
 
-    public function destroy(DeleteProduct\Request $request)
+    public function destroy(DeleteProduct\Request $request, ApiResponse $response): JsonResponse
     {
         $usecase = $this->productUseCaseFactory->makeDeleteProductUseCase();
         $usecase->execute($request);
-        return response()->noContent();
+        return $response->success(204, 'success', null);
     }
 }

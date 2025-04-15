@@ -15,14 +15,8 @@ class UseCase
         $this->service = $service;
     }
 
-    public function execute(Request $request): Response
+    public function execute(Request $request): bool
     {
-        $deleted = $this->service->delete($request->input('id'));
-
-        $response = new Response();
-        $response->setStatus($deleted ? 'success' : 'failed');
-        $response->setMessage($deleted ? '刪除成功' : '刪除失敗');
-
-        return $response;
+        return $this->service->delete($request->input('id'));
     }
 }

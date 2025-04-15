@@ -2,31 +2,17 @@
 
 namespace App\UseCases\ListProducts;
 
-use App\Interfaces\ApiResponse;
-
-class Response implements ApiResponse
+class Response
 {
-    protected ?string $status = null;
-    protected ?string $message = null;
-    protected ?array $data = null;
+    protected ?array $products = null;
     protected ?array $pagination = null;
 
-    public function setMessage(string $message): void
+    public function setProducts(array $data): void
     {
-        $this->message = $message;
+        $this->products = $data;
     }
 
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    public function setData(?array $data): void
-    {
-        $this->data = $data;
-    }
-
-    public function setPagination(?array $pagination): void
+    public function setPagination(array $pagination): void
     {
         $this->pagination = $pagination;
     }
@@ -34,12 +20,8 @@ class Response implements ApiResponse
     public function toArray(): array
     {
         return [
-            'status' => $this->status,
-            'message' => $this->message,
-            'data' => [
-                'products' => $this->data,
-                'pagination' => $this->pagination,
-            ],
+            'products' => $this->products,
+            'pagination' => $this->pagination,
         ];
     }
 }

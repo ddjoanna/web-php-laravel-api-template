@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Entities;
+namespace Tests\Unit\Entities\Props;
 
 use App\Entities\Props\ProductProps;
 use Tests\TestCase;

@@ -28,9 +28,7 @@ class UseCase
         $props = $product->getProps();
 
         $response = new Response();
-        $response->setStatus('success');
-        $response->setMessage('創建成功');
-        $response->setData([
+        $response->setProduct([
             'id' => $product->getId(),
             'name' => $props->getName(),
             'description' => $props->getDescription(),

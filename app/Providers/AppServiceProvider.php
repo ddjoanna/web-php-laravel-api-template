@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Factories\ProductUseCaseFactory;
 use App\Repositories\ProductRepository;
 use App\Services\ProductService;
+use App\Services\ApiResponse;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProductService::class, function ($app) {
             return new ProductService($app->make(ProductRepository::class));
+        });
+
+        $this->app->singleton(ApiResponse::class, function ($app) {
+            return new ApiResponse();
         });
 
         $this->app->singleton(ProductUseCaseFactory::class, function ($app) {

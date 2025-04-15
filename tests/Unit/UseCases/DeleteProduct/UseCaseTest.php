@@ -40,14 +40,9 @@ class UseCaseTest extends TestCase
             ->with($request->input('id'))
             ->andReturn(true);
 
-        $response = $this->useCase->execute($request);
+        $deleted = $this->useCase->execute($request);
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals([
-            'status' => 'success',
-            'message' => '刪除成功',
-            'data' => null,
-        ], $response->toArray());
+        $this->assertTrue($deleted);
     }
 
     /**
@@ -65,14 +60,9 @@ class UseCaseTest extends TestCase
             ->with($request->input('id'))
             ->andReturn(false);
 
-        $response = $this->useCase->execute($request);
+        $deleted = $this->useCase->execute($request);
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals([
-            'status' => 'failed',
-            'message' => '刪除失敗',
-            'data' => null,
-        ], $response->toArray());
+        $this->assertFalse($deleted);
     }
 
     protected function tearDown(): void

@@ -64,14 +64,10 @@ class UseCaseTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertIsArray($response->toArray());
         $this->assertEquals([
-            "status" => "success",
-            "message" => "創建成功",
-            "data" => [
-                "id" => 1,
-                "name" => "Test Product",
-                "description" => "This is a test product.",
-                "price" => 10.99,
-            ],
+            "id" => 1,
+            "name" => "Test Product",
+            "description" => "This is a test product.",
+            "price" => 10.99,
         ], $response->toArray());
     }
 

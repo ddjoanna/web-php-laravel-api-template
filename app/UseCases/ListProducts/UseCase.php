@@ -33,8 +33,6 @@ class UseCase
         $result = $this->service->fetchPaginatedData($conditionsQueryBuilder);
 
         $response = new Response();
-        $response->setStatus('success');
-        $response->setMessage('取得成功');
         $products = array_map(function ($product) {
             return [
                 'id' => $product->getId(),
@@ -43,8 +41,8 @@ class UseCase
                 'price' => $product->getProps()->getPrice(),
             ];
         }, $result['products'], []);
-        $response->setData($products);
-        $response->setPagination($result['pagination'] ?? null);
+        $response->setProducts($products);
+        $response->setPagination($result['pagination'] ?? []);
 
         return $response;
     }

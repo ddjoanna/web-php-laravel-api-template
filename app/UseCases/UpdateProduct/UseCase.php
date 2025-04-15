@@ -16,15 +16,9 @@ class UseCase
         $this->service = $service;
     }
 
-    public function execute(Request $request): Response
+    public function execute(Request $request): bool
     {
         $product = ProductFactory::create($request->all());
-        $updated = $this->service->update($product);
-
-        $response = new Response();
-        $response->setStatus($updated ? 'success' : 'failed');
-        $response->setMessage($updated ? '更新成功' : '更新失敗');
-
-        return $response;
+        return $this->service->update($product);
     }
 }

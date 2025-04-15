@@ -48,14 +48,9 @@ class UseCaseTest extends TestCase
             ->once()
             ->andReturn(true);
 
-        $response = $this->useCase->execute($request);
+        $updated = $this->useCase->execute($request);
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals([
-            'status' => 'success',
-            'message' => '更新成功',
-            'data' => null,
-        ], $response->toArray());
+        $this->assertTrue($updated);
     }
 
     /**
@@ -77,14 +72,9 @@ class UseCaseTest extends TestCase
             ->once()
             ->andReturn(false);
 
-        $response = $this->useCase->execute($request);
+        $updated = $this->useCase->execute($request);
 
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals([
-            'status' => 'failed',
-            'message' => '更新失敗',
-            'data' => null,
-        ], $response->toArray());
+        $this->assertFalse($updated);
     }
 
     protected function tearDown(): void

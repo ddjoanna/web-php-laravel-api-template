@@ -2,35 +2,17 @@
 
 namespace App\UseCases\RegisterUser;
 
-use App\Interfaces\ApiResponse;
-
-class Response implements ApiResponse
+class Response
 {
-    protected string $status = '';
-    protected string $message = '';
-    protected array $data = [];
+    protected array $user = [];
 
-    public function setMessage(string $message): void
+    public function setUser(array $user): void
     {
-        $this->message = $message;
-    }
-
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    public function setData(array $data): void
-    {
-        $this->data = $data;
+        $this->user = $user;
     }
 
     public function toArray(): array
     {
-        return [
-            'status' => $this->status,
-            'message' => $this->message,
-            'data' => $this->data,
-        ];
+        return $this->user;
     }
 }
