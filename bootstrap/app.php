@@ -14,13 +14,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // 
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, $request) {
             $response = app(ApiResponse::class);
             if ($e instanceof Illuminate\Validation\ValidationException) {
                 return $response->error(422, '資料錯誤', $e->errors());
+            }
+
+            if ($e instanceof App\Exceptions\ValidationException) {
+                return $response->error(422, '資料錯誤', $e->getErrors());
             }
 
             if ($e instanceof Illuminate\Database\Eloquent\ModelNotFoundException) {

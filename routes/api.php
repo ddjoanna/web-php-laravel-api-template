@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 // 註冊路由
 Route::post('register', [AuthController::class, 'register']);
@@ -16,4 +17,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     // 產品資源路由
     Route::apiResource('products', ProductController::class);
+    // 產品分類資源路由
+    Route::apiResource('categories', CategoryController::class);
 });
