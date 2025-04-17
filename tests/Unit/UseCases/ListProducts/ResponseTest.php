@@ -4,6 +4,8 @@ namespace Tests\Unit\UseCases\ListProducts;
 
 use PHPUnit\Framework\TestCase;
 use App\UseCases\ListProducts\Response;
+use App\Entities\Product;
+use App\Entities\Props\ProductProps;
 
 class ResponseTest extends TestCase
 {
@@ -17,13 +19,33 @@ class ResponseTest extends TestCase
 
     public function testSetProducts()
     {
-        $data = [
-            ['id' => 1, 'title' => '標題1', 'description' => '描述1', 'price' => 10.99],
-            ['id' => 2, 'title' => '標題2', 'description' => '描述2', 'price' => 10.99],
+        $products = [
+            [
+                'id' => 1,
+                'name' => '標題1',
+                'description' => '描述1',
+                'price' => 10.99
+            ],
+            [
+                'id' => 2,
+                'name' => '標題2',
+                'description' => '描述2',
+                'price' => 10.99
+            ]
         ];
-        $this->response->setProducts($data);
+
+        $entity = [];
+        foreach ($products as $product) {
+            $entity[] = new Product($product['id'], new ProductProps(
+                $product['name'],
+                $product['description'],
+                $product['price']
+            ));
+        }
+        $this->response->setProducts($entity);
+
         $this->assertEquals([
-            'products' => $data,
+            'products' => $products,
             'pagination' => null,
         ], $this->response->toArray());
     }
@@ -44,10 +66,30 @@ class ResponseTest extends TestCase
 
     public function testToArray()
     {
-        $data = [
-            ['id' => 1, 'title' => '標題1', 'description' => '描述1', 'price' => 10.99],
-            ['id' => 2, 'title' => '標題2', 'description' => '描述2', 'price' => 10.99],
+        $products = [
+            [
+                'id' => 1,
+                'name' => '標題1',
+                'description' => '描述1',
+                'price' => 10.99
+            ],
+            [
+                'id' => 2,
+                'name' => '標題2',
+                'description' => '描述2',
+                'price' => 10.99
+            ]
         ];
+
+        $entity = [];
+        foreach ($products as $product) {
+            $entity[] = new Product($product['id'], new ProductProps(
+                $product['name'],
+                $product['description'],
+                $product['price']
+            ));
+        }
+        $this->response->setProducts($entity);
 
         $pagination = [
             'page' => 1,
@@ -55,11 +97,10 @@ class ResponseTest extends TestCase
             'total' => 0,
         ];
 
-        $this->response->setProducts($data);
         $this->response->setPagination($pagination);
 
         $expected = [
-            'products' => $data,
+            'products' => $products,
             'pagination' => $pagination,
         ];
 

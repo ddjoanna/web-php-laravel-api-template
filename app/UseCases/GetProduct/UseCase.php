@@ -19,18 +19,12 @@ class UseCase
     public function execute(Request $request): Response
     {
         $product = $this->service->find($request->input('id'));
-        $response = new Response();
         if (!$product) {
             throw new NotFoundException('Product not found');
         }
 
-        $props = $product->getProps();
-        $response->setProduct([
-            'id' => $product->getId(),
-            'name' => $props->getName(),
-            'description' => $props->getDescription(),
-            'price' => $props->getPrice(),
-        ]);
+        $response = new Response();
+        $response->setProduct($product);
 
         return $response;
     }

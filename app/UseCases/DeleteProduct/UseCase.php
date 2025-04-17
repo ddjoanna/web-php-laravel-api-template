@@ -3,8 +3,7 @@
 namespace App\UseCases\DeleteProduct;
 
 use App\UseCases\DeleteProduct\Request;
-use App\UseCases\DeleteProduct\Response;
-use  App\Services\ProductService;
+use App\Services\ProductService;
 
 class UseCase
 {

@@ -1,5 +1,4 @@
 <?php
-// tests/Unit/Services/ProductServiceTest.php
 
 namespace Tests\Unit\Services;
 

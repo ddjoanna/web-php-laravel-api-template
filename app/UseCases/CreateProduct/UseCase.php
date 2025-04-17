@@ -25,15 +25,9 @@ class UseCase
         );
 
         $product = $this->service->create($productVo);
-        $props = $product->getProps();
 
         $response = new Response();
-        $response->setProduct([
-            'id' => $product->getId(),
-            'name' => $props->getName(),
-            'description' => $props->getDescription(),
-            'price' => $props->getPrice(),
-        ]);
+        $response->setProduct($product);
 
         return $response;
     }

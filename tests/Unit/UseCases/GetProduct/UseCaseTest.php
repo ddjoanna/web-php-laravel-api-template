@@ -28,9 +28,7 @@ class UseCaseTest extends TestCase
         $this->useCase = new UseCase($this->serviceMock);
     }
 
-    /**
-     * 測試取得產品成功
-     */
+    // 測試取得產品成功
     public function testExecuteSuccess()
     {
         $productId = 1;
@@ -68,9 +66,7 @@ class UseCaseTest extends TestCase
         ], $response->toArray());
     }
 
-    /**
-     * 測試取得產品失敗
-     */
+    // 測試取得產品失敗
     public function testExecuteFailure()
     {
         $productId = 1;

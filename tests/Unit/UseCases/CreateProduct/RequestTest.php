@@ -33,7 +33,6 @@ class RequestTest extends TestCase
         $this->assertEquals('required|numeric', $rules['price']);
     }
 
-
     // 測試自定義錯誤訊息
     public function testCustomMessages()
     {
@@ -52,8 +51,6 @@ class RequestTest extends TestCase
     // 測試驗證通過情境
     public function testValidRequestPasses()
     {
-        $product = \App\Models\Product::factory()->create();
-
         $request = new Request();
         $request->merge([
             'name' => 'Updated Product',
@@ -69,16 +66,9 @@ class RequestTest extends TestCase
     // 測試各種驗證失敗情境
     public function testValidationFailureScenarios()
     {
-        // 測試缺少名稱
         $this->assertValidationFails(['name' => ''], 'name', '名稱 欄位是必填的。');
-
-        // 測試缺少描述
         $this->assertValidationFails(['description' => ''], 'description', '描述 欄位是必填的。');
-
-        // 測試缺少價格
         $this->assertValidationFails(['price' => ''], 'price', '價格 欄位是必填的。');
-
-        // 測試非數字價格
         $this->assertValidationFails(['price' => 'abc'], 'price', '價格 欄位必須是一個數字。');
     }
 

@@ -1,15 +1,10 @@
 <?php
-// tests/Unit/UseCases/UpdateProduct/UseCaseTest.php
 
 namespace Tests\Unit\UseCases\UpdateProduct;
 
 use App\UseCases\UpdateProduct\Request;
-use App\UseCases\UpdateProduct\Response;
 use App\UseCases\UpdateProduct\UseCase;
 use App\Services\ProductService;
-use App\Factories\ProductFactory;
-use App\Entities\Product as ProductEntity;
-use Carbon\Factory;
 use Mockery;
 use Tests\TestCase;
 
@@ -29,9 +24,7 @@ class UseCaseTest extends TestCase
         $this->useCase = new UseCase($this->serviceMock);
     }
 
-    /**
-     * 測試更新產品成功
-     */
+    // 測試更新產品成功
     public function testExecuteSuccess()
     {
         $request = new Request();
@@ -53,9 +46,7 @@ class UseCaseTest extends TestCase
         $this->assertTrue($updated);
     }
 
-    /**
-     * 測試更新產品失敗
-     */
+    // 測試更新產品失敗
     public function testExecuteFailure()
     {
         $request = new Request();

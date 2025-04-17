@@ -3,7 +3,6 @@
 namespace Tests\Unit\UseCases\DeleteProduct;
 
 use App\UseCases\DeleteProduct\Request;
-use App\UseCases\DeleteProduct\Response;
 use App\UseCases\DeleteProduct\UseCase;
 use App\Services\ProductService;
 use Mockery;
@@ -25,15 +24,12 @@ class UseCaseTest extends TestCase
         $this->useCase = new UseCase($this->serviceMock);
     }
 
-    /**
-     * 測試刪除產品成功
-     */
+    // 測試刪除產品成功
     public function testExecuteSuccess()
     {
         $request = new Request();
         $request->merge(['id' => 1]);
 
-        // Mock find method of ProductService
         $this->serviceMock
             ->shouldReceive('delete')
             ->once()
@@ -45,15 +41,12 @@ class UseCaseTest extends TestCase
         $this->assertTrue($deleted);
     }
 
-    /**
-     * 測試刪除產品失敗
-     */
+    // 測試刪除產品失敗
     public function testExecuteFailure()
     {
         $request = new Request();
         $request->merge(['id' => 1]);
 
-        // Mock find method of ProductService
         $this->serviceMock
             ->shouldReceive('delete')
             ->once()

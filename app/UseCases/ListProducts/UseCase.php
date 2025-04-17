@@ -25,23 +25,18 @@ class UseCase
             ->setOrderBy($request->input('order_by', 'created_at'))
             ->setOrderDirection($request->input('order_direction', 'desc'));
 
-        if ($request->input('keyword')) {
-            $conditionsQueryBuilder->where('name', '=', $request->input('keyword'));
-            $conditionsQueryBuilder->where('description', '=', $request->input('keyword'));
+        if ($request->input('name')) {
+            $conditionsQueryBuilder->like('name', $request->input('name'));
+        }
+
+        if ($request->input('description')) {
+            $conditionsQueryBuilder->like('description', $request->input('description'));
         }
 
         $result = $this->service->fetchPaginatedData($conditionsQueryBuilder);
 
         $response = new Response();
-        $products = array_map(function ($product) {
-            return [
-                'id' => $product->getId(),
-                'name' => $product->getProps()->getName(),
-                'description' => $product->getProps()->getDescription(),
-                'price' => $product->getProps()->getPrice(),
-            ];
-        }, $result['products'], []);
-        $response->setProducts($products);
+        $response->setProducts($result['products'] ?? []);
         $response->setPagination($result['pagination'] ?? []);
 
         return $response;

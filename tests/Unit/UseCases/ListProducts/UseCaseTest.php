@@ -1,5 +1,4 @@
 <?php
-// tests/Unit/UseCases/ListProducts/UseCaseTest.php
 
 namespace Tests\Unit\UseCases\ListProducts;
 
@@ -7,7 +6,6 @@ use App\UseCases\ListProducts\Request;
 use App\UseCases\ListProducts\Response;
 use App\UseCases\ListProducts\UseCase;
 use App\Services\ProductService;
-use App\Builders\ConditionsQueryBuilder;
 use App\Entities\Product as ProductEntity;
 use App\Entities\Props\ProductProps;
 use Mockery;
@@ -29,9 +27,7 @@ class UseCaseTest extends TestCase
         $this->useCase = new UseCase($this->serviceMock);
     }
 
-    /**
-     * 測試列出產品成功
-     */
+    // 測試列出產品成功
     public function testExecuteSuccess()
     {
         $request = new Request();
@@ -72,7 +68,6 @@ class UseCaseTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertIsArray($response->toArray());
-        $this->assertIsArray($response->toArray());
         $this->assertCount(1, $response->toArray()['products']);
         $this->assertEquals(1, $response->toArray()['products'][0]['id']);
         $this->assertEquals('Test Product', $response->toArray()['products'][0]['name']);
@@ -83,9 +78,7 @@ class UseCaseTest extends TestCase
         $this->assertEquals(10, $response->toArray()['pagination']['page_size']);
     }
 
-    /**
-     * 測試列出產品帶關鍵字
-     */
+    // 測試列出產品帶關鍵字
     public function testExecuteWithKeyword()
     {
         $request = new Request();

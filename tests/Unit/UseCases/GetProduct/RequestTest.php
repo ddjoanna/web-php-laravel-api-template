@@ -52,9 +52,7 @@ class RequestTest extends TestCase
     // 測試路由參數自動合併到請求數據
     public function testRouteParameterMerging()
     {
-        // 創建請求實例
         $request = Request::create('/products/123', 'GET');
-
 
         // 設定路由解析器
         $request->setRouteResolver(function () {
@@ -69,7 +67,6 @@ class RequestTest extends TestCase
         // 調用方法並執行合併邏輯
         $method->invoke($request);
 
-        // 驗證路由參數是否正確合併到請求數據
         $this->assertEquals(123, $request->input('id'));
     }
 
@@ -89,13 +86,8 @@ class RequestTest extends TestCase
     // 測試各種驗證失敗情境
     public function testValidationFailureScenarios()
     {
-        // 測試缺少 ID
         $this->assertValidationFails([], 'id', '產品 ID 欄位是必填的。');
-
-        // 測試非整數 ID
         $this->assertValidationFails(['id' => 'abc'], 'id', '產品 ID 欄位必須是一個整數。');
-
-        // 測試不存在 ID
         $this->assertValidationFails(['id' => 999], 'id', '所選的 產品 ID 無效。');
     }
 

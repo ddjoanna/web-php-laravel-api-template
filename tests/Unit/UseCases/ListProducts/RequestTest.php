@@ -25,8 +25,10 @@ class RequestTest extends TestCase
         $request = new Request();
         $rules = $request->rules();
 
-        $this->assertArrayHasKey('keyword', $rules);
-        $this->assertEquals('nullable|string', $rules['keyword']);
+        $this->assertArrayHasKey('name', $rules);
+        $this->assertEquals('nullable|string', $rules['name']);
+        $this->assertArrayHasKey('description', $rules);
+        $this->assertEquals('nullable|string', $rules['description']);
         $this->assertArrayHasKey('page', $rules);
         $this->assertEquals('nullable|integer|min:1', $rules['page']);
         $this->assertArrayHasKey('page_size', $rules);
@@ -44,7 +46,8 @@ class RequestTest extends TestCase
         $request = new Request();
 
         $expectedMessages = [
-            'keyword.string' => '關鍵字 欄位必須是一個字串。',
+            'name.string' => '名稱 欄位必須是一個字串。',
+            'description.string' => '描述 欄位必須是一個字串。',
             'page.integer' => '頁碼 欄位必須是一個整數。',
             'page.min' => [
                 'array' => '頁碼 欄位必須至少有 1 個項目。',
@@ -94,28 +97,13 @@ class RequestTest extends TestCase
     // 測試各種驗證失敗情境
     public function testValidationFailureScenarios()
     {
-        // 測試非整數 page
         $this->assertValidationFails(['page' => 'abc'], 'page', '頁碼 欄位必須是一個整數。');
-
-        // 測試不大於或等於 0 的 page
         $this->assertValidationFails(['page' => 0], 'page', '頁碼 欄位必須至少為 1。');
-
-        // 測試不小於或等於 100 的 page_size
         $this->assertValidationFails(['page_size' => 101], 'page_size', '每頁顯示數量 欄位不得大於 100。');
-
-        // 測試不大於或等於 0 的 page_size
         $this->assertValidationFails(['page_size' => 0], 'page_size', '每頁顯示數量 欄位必須至少為 1。');
-
-        // 測試非整數 page_size
         $this->assertValidationFails(['page_size' => 'abc'], 'page_size', '每頁顯示數量 欄位必須是一個整數。');
-
-        // 測試非整數 order_by
         $this->assertValidationFails(['order_by' => 1], 'order_by', '排序欄位 欄位必須是一個字串。 所選的 排序欄位 無效。');
-
-        // 測試非整數 order_direction
         $this->assertValidationFails(['order_direction' => 1], 'order_direction', '排序方向 欄位必須是一個字串。');
-
-        // 測試不存在 order_direction
         $this->assertValidationFails(['order_direction' => 'abc'], 'order_direction', '所選的 排序方向 無效。');
     }
 

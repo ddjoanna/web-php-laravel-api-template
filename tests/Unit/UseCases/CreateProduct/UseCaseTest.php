@@ -28,9 +28,6 @@ class UseCaseTest extends TestCase
         $this->useCase = new UseCase($this->serviceMock);
     }
 
-    /**
-     * 測試創建產品
-     */
     public function testExecute()
     {
         $request = new Request();

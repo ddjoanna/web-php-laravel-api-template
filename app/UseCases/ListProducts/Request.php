@@ -9,7 +9,8 @@ class Request extends FormRequest
     public function rules(): array
     {
         return [
-            'keyword' => 'nullable|string',
+            'name' => 'nullable|string',
+            'description' => 'nullable|string',
             'page' => 'nullable|integer|min:1',
             'page_size' => 'nullable|integer|min:1|max:100',
             'order_by' => 'nullable|string|in:id,name,description,price',
@@ -20,7 +21,8 @@ class Request extends FormRequest
     public function messages(): array
     {
         return [
-            'keyword.string' => trans('validation.string', ['attribute' => '關鍵字']),
+            'name.string' => trans('validation.string', ['attribute' => '名稱']),
+            'description.string' => trans('validation.string', ['attribute' => '描述']),
             'page.integer' => trans('validation.integer', ['attribute' => '頁碼']),
             'page.min' => trans('validation.min', ['attribute' => '頁碼', 'min' => 1]),
             'page_size.integer' => trans('validation.integer', ['attribute' => '每頁顯示數量']),
