@@ -1,6 +1,6 @@
 <?php
 
-use App\Services\ApiResponse;
+use App\Services\ApiResponseService;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, $request) {
-            $response = app(ApiResponse::class);
+            $response = app(ApiResponseService::class);
             if ($e instanceof Illuminate\Validation\ValidationException) {
                 return $response->error(422, '資料錯誤', $e->errors());
             }
