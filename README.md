@@ -9,21 +9,25 @@
 
 1.  定義一個基本的 API 應用程式結構
 
-    -   Builder
-    -   Entity
+    -   Builders
+    -   Console
+        -   Commands
+    -   Entities
         -   Props
-    -   Exception
+    -   Exceptions
     -   Factories
     -   Http
         -   Controllers
         -   Middleware
-    -   Interfaces
+    -   Jobs
+    -   Listeners
+    -   Mail
     -   Models
     -   Providers
     -   Repositories
-    -   Service
-    -   UseCase
-    -   ValueObject
+    -   Services
+    -   UseCases
+    -   ValueObjects
 
 2.  依據結構 自定義 Console 指令，快速創建物件模板
 
