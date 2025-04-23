@@ -42,6 +42,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 return $response->error(401, '未登入', null);
             }
 
+            if ($e instanceof Laravel\Horizon\Exceptions\ForbiddenException) {
+                return $response->error(403, '權限不足', null);
+            }
+
             // 預設的錯誤處理
             return $response->error(500, '發生錯誤', app()->isLocal() ? $e->getMessage() : null);
         });
