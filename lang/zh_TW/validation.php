@@ -157,7 +157,7 @@ return [
     'starts_with' => ':attribute 欄位必須以下列之一開頭：:values。',
     'string' => ':attribute 欄位必須是一個字串。',
     'timezone' => ':attribute 欄位必須是一個有效的時區。',
-    'unique' => ':attribute 已經被佔用。',
+    'unique' => ':attribute 已經存在。',
     'uploaded' => ':attribute 上傳失敗。',
     'uppercase' => ':attribute 欄位必須是大寫。',
     'url' => ':attribute 欄位必須是一個有效的 URL。',

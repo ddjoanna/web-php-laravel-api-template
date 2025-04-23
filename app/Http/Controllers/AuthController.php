@@ -2,89 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
+use App\Factories\UserUseCaseFactory;
+use App\UseCases\UserRegister;
+use App\UseCases\UserLogin;
+use App\UseCases\UserLogout;
+use App\UseCases\UserProfile;
+use App\Services\ApiResponseService;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
+    protected UserUseCaseFactory $userUseCaseFactory;
+
+    public function __construct(UserUseCaseFactory $userUseCaseFactory)
+    {
+        $this->userUseCaseFactory = $userUseCaseFactory;
+    }
+
     /**
      * 用戶註冊
      */
-    public function register(Request $request)
+    public function register(UserRegister\Request $request, ApiResponseService $response): JsonResponse
     {
-        // 驗證請求
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed',
-        ]);
-
-        // 創建用戶
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => Hash::make($fields['password']),  // 使用 Hash::make 來加密密碼
-        ]);
-
-        // 創建 token
-        $token = $user->createToken('apptoken')->plainTextToken;
-
-        // 返回註冊成功的結果與 token
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        $usecase = $this->userUseCaseFactory->makeUserRegisterUseCase();
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 
     /**
      * 用戶登入
      */
-    public function login(Request $request)
+    public function login(UserLogin\Request $request, ApiResponseService $response): JsonResponse
     {
-        // 驗證請求
-        $fields = $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        // 找到用戶
-        $user = User::where('email', $fields['email'])->first();
-
-        // 檢查密碼
-        if (!$user || !Hash::check($fields['password'], $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-
-        // 創建 token
-        $token = $user->createToken('apptoken')->plainTextToken;
-
-        // 返回登入成功的結果與 token
-        return response()->json([
-            'message' => 'User logged in successfully',
-            'user' => $user,
-            'token' => $token
-        ]);
+        $usecase = $this->userUseCaseFactory->makeUserLoginUseCase();
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 
     /**
      * 用戶登出
      */
-    public function logout(Request $request)
+    public function logout(UserLogout\Request $request, ApiResponseService $response): JsonResponse
     {
-        // 刪除所有 token，登出
-        auth()->user()->tokens()->delete();
-
-        // 返回登出訊息
-        return response()->json(['message' => 'Logged out successfully']);
+        $usecase = $this->userUseCaseFactory->makeUserLogoutUseCase();
+        $usecase->execute($request);
+        return $response->success(204, 'success');
     }
 
     /**
      * 獲取當前登入用戶的資訊
      */
-    public function me(Request $request)
+    public function me(UserProfile\Request $request, ApiResponseService $response): JsonResponse
     {
-        return response()->json($request->user());
+        $usecase = $this->userUseCaseFactory->makeUserProfileUseCase();
+        $result = $usecase->execute($request);
+        return $response->success(200, 'success', $result->toArray());
     }
 }

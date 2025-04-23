@@ -14,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // 
+        $middleware->alias([
+            // 設定 auth 中介層
+            'auth' => \App\Http\Middleware\Authenticate::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, $request) {
@@ -24,7 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($e instanceof App\Exceptions\ValidationException) {
-                return $response->error(422, '資料錯誤', $e->getErrors());
+                return $response->error(422, $e->getMessage(), $e->getErrors());
             }
 
             if ($e instanceof Illuminate\Database\Eloquent\ModelNotFoundException) {
