@@ -46,6 +46,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 return $response->error(403, '權限不足', null);
             }
 
+            if ($e instanceof Illuminate\Http\Exceptions\ThrottleRequestsException) {
+                return $response->error(429, '請求速率限制', null);
+            }
+
+            if ($e instanceof Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                return $response->error(404, '找不到資料', null);
+            }
+
             // 預設的錯誤處理
             return $response->error(500, '發生錯誤', app()->isLocal() ? $e->getMessage() : null);
         });
